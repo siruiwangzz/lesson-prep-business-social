@@ -12,19 +12,21 @@ cd "$WORKDIR"
 
 echo "→ 设置仓库 description..."
 DESC_JSON=$(python3 -c 'import json,sys; print(json.dumps({"description": sys.argv[1]}, ensure_ascii=False))' "$DESC")
-DESC_RESP=$(curl -s -w "\n%{http_code}" -X PATCH \
+DESC_BODY=$(mktemp)
+DESC_CODE=$(curl -s -o "$DESC_BODY" -w "%{http_code}" -X PATCH \
   -H "Authorization: Bearer $TOKEN" \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   https://api.github.com/repos/$REPO \
   -d "$DESC_JSON")
-DESC_CODE=$(echo "$DESC_RESP" | tail -1)
 if [ "$DESC_CODE" != "200" ]; then
-  echo "  ✗ description 设置失败 (HTTP $DESC_CODE)："
-  echo "$DESC_RESP" | head -n -1
-  exit 1
+  echo "  ! description 设置失败 (HTTP $DESC_CODE，需 Administration: write 权限)："
+  cat "$DESC_BODY"
+  echo "  （不影响代码推送，继续）"
+else
+  echo "  ✓ description 已设置"
 fi
-echo "  ✓ description 已设置"
+rm -f "$DESC_BODY"
 
 echo "→ 推送代码..."
 git remote remove origin 2>/dev/null || true
