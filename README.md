@@ -1,12 +1,12 @@
 # Lesson Prep — 商科 / 社科备课助手
 
-> A WorkBuddy skill that turns textbook materials into a ready-to-use lesson plan.
+> A platform-agnostic skill that turns textbook materials into a ready-to-use lesson plan.
 
 ## Description
 
-**中文**：面向商科、经济、社科课堂的 WorkBuddy 备课技能。用户上传教材/课本/讲义的截图、PDF、Word 后，按页码逐页提取重点知识点（核心概念用英文，其余用中文），每页或每两页设计一次带参考答案的课堂互动，并在结尾总结整份材料的知识脉络与结构。
+**中文**：面向商科、经济、社科课堂的通用备课技能。以纯 Markdown 编写，不依赖任何特定平台或工具，可作为任意 AI agent 的 skill / 自定义指令使用（如 Claude、ChatGPT、Gemini、Cursor、WorkBuddy 等）。用户上传教材/课本/讲义的截图、PDF、Word 后，按页码逐页提取重点知识点（核心概念用英文，其余用中文），每页或每两页设计一次带参考答案的课堂互动，并在结尾总结整份材料的知识脉络与结构。
 
-**English**: A WorkBuddy skill for business, economics and social-science teaching. Give it textbook screenshots, PDFs or Word files, and it produces a per-page breakdown of key points (core concepts in English, explanations in Chinese), one classroom interaction with a ready-to-use answer roughly every page or two, and a final summary of the knowledge map and structure.
+**English**: A platform-agnostic lesson-prep skill for business, economics and social-science teaching. Written in plain Markdown with no dependency on any specific platform or tooling, it works as a skill / custom instruction in any AI agent (e.g. Claude, ChatGPT, Gemini, Cursor, WorkBuddy). Give it textbook screenshots, PDFs or Word files, and it produces a per-page breakdown of key points (core concepts in English, explanations in Chinese), one classroom interaction with a ready-to-use answer roughly every page or two, and a final summary of the knowledge map and structure.
 
 ## Features
 
@@ -21,7 +21,10 @@
 
 ## Installation
 
-将本仓库放到 WorkBuddy 的用户级技能目录：
+本技能是纯 Markdown 指令集，不依赖特定平台。把 `SKILL.md` 和 `references/` 作为 skill 或自定义指令加载到你使用的 AI agent 即可。
+
+- **通用做法**：下载本仓库，将 `SKILL.md` 的内容作为该 agent 的 system prompt / 自定义指令，或按该平台规定的 skill 目录格式放置。
+- **WorkBuddy 示例**：克隆到用户级技能目录后自动可用。
 
 ```bash
 git clone <your-repo-url> ~/.workbuddy/skills/lesson-prep-business-social
@@ -30,7 +33,7 @@ git clone <your-repo-url> ~/.workbuddy/skills/lesson-prep-business-social
 目录结构需保持为：
 
 ```
-~/.workbuddy/skills/lesson-prep-business-social/
+lesson-prep-business-social/
 ├── SKILL.md
 ├── README.md
 └── references/
@@ -38,9 +41,11 @@ git clone <your-repo-url> ~/.workbuddy/skills/lesson-prep-business-social
     └── interaction-guide.md
 ```
 
+其中 `SKILL.md` 是核心（包含 frontmatter 元数据与完整工作流），`references/` 为按需加载的模板与指南；两者需保持相对路径关系。
+
 ## Usage
 
-在 WorkBuddy 中上传教材类文件（截图 / PDF / Word），说一句「帮我备课」即可触发。常用说法：
+在你使用的 AI agent 中上传教材类文件（截图 / PDF / Word），说一句「帮我备课」即可触发。常用说法：
 
 - 「帮我备课，按页码梳理知识点」
 - 「逐页提取重点，并设计课堂互动」
